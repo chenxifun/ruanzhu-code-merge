@@ -8,7 +8,6 @@ import (
 )
 
 func (a *CodeArrange) hasFilePath(p string) bool {
-
 	for _, s := range a.fileList {
 		if s == p {
 			return true
@@ -22,9 +21,7 @@ func (a *CodeArrange) setFilePath(filePaths []string) {
 		if !a.hasFilePath(filePath) && a.isExt(filePath) {
 			a.fileList = append(a.fileList, filePath)
 		}
-
 	}
-
 }
 
 func (a *CodeArrange) isExt(p string) bool {

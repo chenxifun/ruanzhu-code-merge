@@ -1,28 +1,30 @@
 package core
 
 import (
-	"errors"
+	"github.com/chenxifun/ruanzhu-code-merge/comm"
 	"os"
-	"path"
 	"regexp"
 	"strings"
 )
 
 type CodeArrange struct {
 	// PathList 代码文件路径，已去重
-	PathList []string
+	PathList []string `json:"pathList,omitempty" yaml:"pathList"`
 
 	// Ext 读取后缀
-	Ext []string
+	Ext []string `json:"ext,omitempty" yaml:"ext"`
 
 	// OutPath 输出的文件路径
-	OutPath  string
+	OutPath  string `json:"outPath,omitempty" yaml:"outPath"`
 	fileList []string
 
 	codeContent []byte
 }
 
 func (a *CodeArrange) Start() error {
+	if len(strings.TrimSpace(a.OutPath)) == 0 {
+		a.OutPath = "code.txt"
+	}
 	a.readAllFilePath()
 	a.readCode()
 	return a.writeFile()
@@ -58,21 +60,5 @@ func (a *CodeArrange) convCode(c []byte) []byte {
 
 func (a *CodeArrange) writeFile() error {
 
-	return WriteFile(a.codeContent, a.OutPath, true)
-}
-
-func WriteFile(data []byte, filePath string, cover bool) error {
-
-	if !cover {
-		if _, err1 := os.Stat(filePath); !os.IsNotExist(err1) {
-			return errors.New("file is exist")
-		}
-	}
-
-	err := os.MkdirAll(path.Dir(filePath), 0700)
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(filePath, data, 0600)
-
+	return comm.WriteFile(a.codeContent, a.OutPath, true)
 }

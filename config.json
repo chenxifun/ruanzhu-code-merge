@@ -1,0 +1,11 @@
+{
+	"pathList": [
+		"/Users/gaochenxi/Code/github/chenxifun/ruanzhu-code-merge/main.go",
+		"/Users/gaochenxi/Code/github/chenxifun/ruanzhu-code-merge/core"
+	],
+	"ext": [
+		".go",
+		".proto"
+	],
+	"outPath": "./code.txt"
+}
